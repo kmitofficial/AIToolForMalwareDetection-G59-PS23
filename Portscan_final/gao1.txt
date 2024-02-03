@@ -1,0 +1,108 @@
+tshark -r input.pcap -Y "tcp" -T fields -e ip.src -e tcp.srcport -e tcp.dstport -e frame.number -e tcp.analysis.retransmission -e tcp.len -e tcp.window_size -e tcp.window_scaling
+
+
+To extract the desired features from pcap files, you can use the `tshark` tool, which is part of the Wireshark suite. `tshark` is a command-line version of Wireshark and can be used to analyze network traffic and extract various details about the packets.
+
+Here is an example of how you can use `tshark` to extract the desired features from a pcap file:
+
+```bash
+tshark -r input.pcap -Y "tcp" -T fields -e ip.src -e tcp.srcport -e tcp.dstport -e frame.number -e tcp.analysis.retransmission -e tcp.len -e tcp.window_size -e tcp.window_scaling
+```
+
+In this command:
+
+- `-r input.pcap` specifies the input pcap file.
+- `-Y "tcp"` filters the packets to only show TCP packets.
+- `-T fields` outputs the fields specified in the `-e` options.
+- `-e ip.src`, `-e tcp.srcport`, `-e tcp.dstport`, `-e frame.number`, `-e tcp.analysis.retransmission`, `-e tcp.len`, `-e tcp.window_size`, `-e tcp.window_scaling` specify the fields to output. These correspond to the source IP, source port, destination port, frame number, retransmission status, TCP length, TCP window size, and TCP window scaling, respectively.
+
+This command will output the desired features for each TCP packet in the pcap file. You can redirect the output to a file or further process it using other tools as needed [Source 0](https://tranalyzer.com/tutorial/pcapextraction), [Source 3](https://github.com/lucadivit/Pcap_Features_Extraction).
+
+
+#########################################################################################################################################
+
+ **Here are the steps to extract the specified TCP features from your pcap file using terminal commands:**
+
+**1. Install TShark:**
+
+   - If you don't have TShark already, install it using your package manager:
+     - **Ubuntu/Debian:** `sudo apt install tshark`
+     - **macOS (Homebrew):** `brew install wireshark`
+     - **Windows:** Download Wireshark (includes TShark) from [https://www.wireshark.org/](https://www.wireshark.org/)
+
+**2. Extract the features:**
+
+   - Navigate to the directory containing your pcap file in the terminal.
+   - Use the following TShark command to extract the desired features:
+
+     ```bash
+     tshark -r <your_pcap_file.pcap> -T fields -e tcp.srcport -e tcp.dstport -e tcp.stream -e tcp.analysis.conversation_complete -e tcp.segment -e tcp.window_size_value
+     ```
+
+**Explanation of the command:**
+
+   - `-r <your_pcap_file.pcap>`: Specifies the pcap file to analyze.
+   - `-T fields`: Formats the output in a concise, delimited format.
+   - `-e`: Lists the fields to extract:
+      - `tcp.srcport`: Source port number
+      - `tcp.dstport`: Destination port number
+      - `tcp.stream`: Stream index (identifies a TCP conversation)
+      - `tcp.analysis.conversation_complete`: Indicates conversation completeness (1 for complete, 0 for incomplete)
+      - `tcp.segment`: TCP segment data
+      - `tcp.window_size_value`: Window size advertised by the receiver
+
+**Additional considerations:**
+
+   - **Output format:** The default delimiter is a tab (`\t`). Use `-E separator=,` for comma-separated output, or `-E separator="|"` for pipe-separated output.
+   - **Filtering:** Add a display filter after `-r` to focus on specific packets (e.g., `tshark -r <file> -Y "tcp.port == 80"` to filter for HTTP traffic).
+   - **Output redirection:** Redirect output to a file using `> output.txt`.
+
+**Example output:**
+
+```
+443  54395  0   1      4254 29200
+80   54396  1   1      528  5840
+...
+```
+
+**Remember:**
+
+   - Replace `<your_pcap_file.pcap>` with the actual name of your pcap file.
+   - Customize the command as needed for filtering, output format, and redirection.
+
+
+
+
+for window and completeness flags:
+tshark -r C:\Users\soman\Downloads\Portscan_3.pcap -T fields -e tcp.srcport -e tcp.dstport -e tcp.stream -e tcp.flags.str
+
+
+
+tshark -r C:\Users\soman\Downloads\Portscan_3.pcap -Y "tcp" -T fields -e tcp.window_size -e tcp.flags.str > C:\Users\soman\OneDrive\Desktop\smthg.txt
+
+
+
+
+
+Final:
+tshark -r C:\Users\soman\Downloads\Portscan_3.pcap -Y "tcp" -T fields -e frame.number -e tcp.window_size_value -e tcp.completeness.str> C:\Users\soman\OneDrive\Desktop\smthg.txt
+tshark -r C:\Users\soman\Downloads\Portscan_3.pcap -Y "tcp" -T fields -e tcp.window_size_value -e tcp.completeness.str> C:\Users\soman\OneDrive\Desktop\smthg.csv
+
+
+Dependencies:
+
+Apps:
+   Wireshark, Npcap
+
+Py Modules Used:
+   pyshark - pip install pyshark
+   os
+   joblib
+   pandas as pd - pip install pandas
+   numpy as np - pip install numpy
+   warnings
+   subprocess
+   time 
+
+Port_scan: 
+      Nmap
